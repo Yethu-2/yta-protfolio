@@ -1,70 +1,83 @@
 import { motion } from 'framer-motion'
+import {
+  SiJavascript, SiPython, SiKotlin, SiReact, SiSpring,
+  SiNodedotjs, SiPostgresql, SiMysql, SiMongodb,
+  SiFirebase, SiSupabase, SiDocker, SiGit, SiLinux, SiNginx, SiCloudflare, SiAndroid,
+} from 'react-icons/si'
+import { SectionLabel } from './About'
 
 const CATEGORIES = [
   {
-    title: 'Languages',
-    skills: ['Java', 'Kotlin', 'JavaScript', 'Python', 'SQL'],
-    color: 'text-cyan-400',
-    badge: 'bg-cyan-400/10 text-cyan-300 border-cyan-400/20',
-    glow: 'hover:border-cyan-400/30',
+    label: 'Languages',
+    items: [
+      { name:'Java',       Icon:null },
+      { name:'Kotlin',     Icon:SiKotlin },
+      { name:'JavaScript', Icon:SiJavascript },
+      { name:'Python',     Icon:SiPython },
+      { name:'SQL',        Icon:null },
+    ],
   },
   {
-    title: 'Frameworks & Libraries',
-    skills: ['React', 'Node.js', 'Express', 'Spring Boot', 'JavaFX', 'Jetpack Compose'],
-    color: 'text-violet-400',
-    badge: 'bg-violet-400/10 text-violet-300 border-violet-400/20',
-    glow: 'hover:border-violet-400/30',
+    label: 'Frameworks',
+    items: [
+      { name:'React',           Icon:SiReact },
+      { name:'Node.js',         Icon:SiNodedotjs },
+      { name:'Spring Boot',     Icon:SiSpring },
+      { name:'Express',         Icon:null },
+      { name:'Jetpack Compose', Icon:SiAndroid },
+    ],
   },
   {
-    title: 'Databases',
-    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Firebase Firestore', 'Supabase'],
-    color: 'text-emerald-400',
-    badge: 'bg-emerald-400/10 text-emerald-300 border-emerald-400/20',
-    glow: 'hover:border-emerald-400/30',
+    label: 'Databases',
+    items: [
+      { name:'PostgreSQL', Icon:SiPostgresql },
+      { name:'MySQL',      Icon:SiMysql },
+      { name:'MongoDB',    Icon:SiMongodb },
+      { name:'Firebase',   Icon:SiFirebase },
+      { name:'Supabase',   Icon:SiSupabase },
+    ],
   },
   {
-    title: 'Tools & Platforms',
-    skills: ['Docker', 'Git', 'Maven', 'Linux', 'AWS', 'Nginx', 'Cloudflare'],
-    color: 'text-amber-400',
-    badge: 'bg-amber-400/10 text-amber-300 border-amber-400/20',
-    glow: 'hover:border-amber-400/30',
+    label: 'Tools & Infra',
+    items: [
+      { name:'Docker',     Icon:SiDocker },
+      { name:'Git',        Icon:SiGit },
+      { name:'Linux',      Icon:SiLinux },
+      { name:'Nginx',      Icon:SiNginx },
+      { name:'Cloudflare', Icon:SiCloudflare },
+      { name:'AWS',        Icon:null },
+    ],
   },
 ]
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-28 px-6 bg-white/[0.012]">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-14"
-        >
-          <p className="text-accent font-mono text-sm mb-2">02. Skills</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Tech Stack</h2>
-          <div className="w-14 h-0.5 bg-gradient-to-r from-accent to-transparent mt-4" />
-        </motion.div>
+    <section id="skills" className="py-24 px-6 border-t border-black/[0.07]">
+      <div className="max-w-5xl mx-auto">
+        <SectionLabel number="02" label="Tech Stack"/>
 
         <div className="grid sm:grid-cols-2 gap-5">
-          {CATEGORIES.map(({ title, skills, color, badge, glow }, i) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              className={`p-6 rounded-2xl border border-white/5 bg-white/[0.02] transition-all duration-200 ${glow}`}
+          {CATEGORIES.map(({ label, items }, ci) => (
+            <motion.div key={label}
+              initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
+              viewport={{ once:true }} transition={{ delay:ci*0.08, duration:0.5 }}
+              className="bg-[#faf8f4] rounded-xl p-6 border border-black/[0.07]"
             >
-              <h3 className={`font-bold text-base mb-5 ${color}`}>{title}</h3>
+              <p className="font-mono text-[11px] text-[#9b9895] tracking-widest uppercase mb-4 font-medium">
+                {label}
+              </p>
               <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium border ${badge}`}
+                {items.map(({ name, Icon }) => (
+                  <span key={name}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5
+                      bg-white border border-black/[0.08] text-[#4a4745] text-xs font-medium rounded-lg
+                      hover:border-accent/40 hover:text-accent transition-all cursor-default group"
                   >
-                    {skill}
+                    {Icon
+                      ? <Icon size={12} className="text-[#9b9895] group-hover:text-accent transition-colors"/>
+                      : <span className="w-1.5 h-1.5 rounded-full bg-[#c5c0b8] group-hover:bg-accent transition-colors"/>
+                    }
+                    {name}
                   </span>
                 ))}
               </div>

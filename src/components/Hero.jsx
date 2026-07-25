@@ -1,40 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-scroll'
-import { FiGithub, FiMail } from 'react-icons/fi'
-import { HiLocationMarker } from 'react-icons/hi'
+import { FiGithub, FiMail, FiDownload } from 'react-icons/fi'
 
-const ROLES = [
-  'Full Stack Developer',
-  'AI Systems Builder',
-  'Android Developer',
-  'Cloud & DevOps Enthusiast',
-]
+const ROLES = ['Full Stack Developer', 'AI Systems Builder', 'Android Developer', 'Cloud Engineer']
 
 function useTyping(words) {
-  const [idx, setIdx] = useState(0)
+  const [idx, setIdx]   = useState(0)
   const [text, setText] = useState('')
-  const [deleting, setDeleting] = useState(false)
+  const [del, setDel]   = useState(false)
 
   useEffect(() => {
-    const word = words[idx]
-    const speed = deleting ? 35 : 75
-
-    if (!deleting && text === word) {
-      const t = setTimeout(() => setDeleting(true), 2200)
-      return () => clearTimeout(t)
-    }
-    if (deleting && text === '') {
-      setDeleting(false)
-      setIdx((i) => (i + 1) % words.length)
-      return
-    }
-
-    const t = setTimeout(() => {
-      setText(deleting ? text.slice(0, -1) : word.slice(0, text.length + 1))
-    }, speed)
+    const word = words[idx], speed = del ? 35 : 80
+    if (!del && text === word) { const t = setTimeout(() => setDel(true), 2000); return () => clearTimeout(t) }
+    if (del && !text)          { setDel(false); setIdx(i => (i + 1) % words.length); return }
+    const t = setTimeout(() => setText(del ? text.slice(0,-1) : word.slice(0, text.length+1)), speed)
     return () => clearTimeout(t)
-  }, [text, deleting, idx, words])
+  }, [text, del, idx, words])
 
   return text
 }
@@ -43,113 +25,99 @@ export default function Hero() {
   const role = useTyping(ROLES)
 
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center relative overflow-hidden"
-    >
-      {/* Background ambient orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 -left-40 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[140px]" />
-        <div className="absolute bottom-0 -right-40 w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[120px]" />
+    <section id="home" className="min-h-screen flex items-center px-6 pt-16">
+      <div className="max-w-5xl mx-auto w-full py-20">
+        <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
 
-        {/* Subtle dot grid */}
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              'radial-gradient(rgba(100,255,218,0.8) 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-      </div>
+          {/* Photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="flex-shrink-0 relative"
+          >
+            <div className="w-48 h-60 md:w-56 md:h-72 lg:w-64 lg:h-80 rounded-2xl overflow-hidden
+              ring-1 ring-black/10 shadow-xl shadow-black/10">
+              <img src="/profile.jpg" alt="Ye Thu Aung"
+                className="w-full h-full object-cover object-top grayscale"/>
+            </div>
+            {/* Accent corner bracket */}
+            <div className="absolute -bottom-3 -right-3 w-14 h-1 bg-accent rounded-full"/>
+            <div className="absolute -bottom-3 -right-3 w-1 h-14 bg-accent rounded-full"/>
+          </motion.div>
 
-      <div className="max-w-6xl mx-auto px-6 pt-28 pb-16 z-10 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-        >
-          <p className="font-mono text-accent text-sm tracking-widest mb-5">
-            Hi, my name is
-          </p>
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex-1 min-w-0"
+          >
+            <p className="font-mono text-accent text-xs tracking-widest uppercase mb-4 font-medium">
+              Hey, I'm
+            </p>
 
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-extrabold text-white leading-none mb-4 tracking-tight">
-            Ye Thu Aung<span className="text-accent">.</span>
-          </h1>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#18181b]
+              leading-[1.05] tracking-tight mb-4">
+              Ye Thu<br/>Aung
+            </h1>
 
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-400 mb-6 flex items-center gap-2 h-10">
-            <span className="text-accent/90">{role}</span>
-            <span className="w-[2px] h-7 bg-accent/80 inline-block animate-pulse" />
-          </h2>
+            <div className="flex items-center gap-2 mb-6 h-8">
+              <span className="text-[#4a4745] font-semibold text-lg">{role}</span>
+              <span className="w-0.5 h-5 bg-accent animate-pulse inline-block"/>
+            </div>
 
-          <p className="text-slate-400 text-base md:text-lg max-w-2xl mb-10 leading-relaxed">
-            IT student at{' '}
-            <span className="text-white font-medium">RMIT University Vietnam</span>{' '}
-            specializing in{' '}
-            <span className="text-accent">Full-Stack Development</span> and{' '}
-            <span className="text-accent">AI Systems</span>. I build scalable
-            applications with Node.js, Spring Boot, and React — and love turning
-            complex problems into clean, efficient solutions.
-          </p>
+            <p className="text-[#5a5652] leading-relaxed mb-4 max-w-lg text-[15px]">
+              IT student at <span className="text-[#18181b] font-semibold">RMIT University Vietnam</span>{' '}
+              building full-stack products across web, mobile, and AI — from Spring Boot REST APIs
+              and React frontends to Kotlin Android apps and local LLM tooling.
+            </p>
+            <p className="text-[#5a5652] leading-relaxed mb-6 max-w-lg text-[15px]">
+              I care about clean architecture and shipping things that actually work —
+              containerised with Docker, deployed on self-hosted infrastructure,
+              and currently open to <span className="text-[#18181b] font-medium">internship and junior developer</span> roles.
+            </p>
 
-          <div className="flex flex-wrap gap-4 mb-12">
-            <Link to="projects" smooth duration={500} offset={-70}>
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="px-8 py-3 bg-accent text-[#050510] font-bold rounded-lg hover:bg-accent/90 transition-colors font-mono text-sm"
-              >
-                View My Work
-              </motion.button>
-            </Link>
-            <Link to="contact" smooth duration={500} offset={-70}>
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                className="px-8 py-3 border border-accent text-accent font-bold rounded-lg hover:bg-accent/10 transition-colors font-mono text-sm"
-              >
-                Get In Touch
-              </motion.button>
-            </Link>
-          </div>
+            <div className="flex gap-6 mb-8">
+              {[['3', 'Projects'], ['20+', 'Technologies'], ['2027', 'Graduating']].map(([val, lbl]) => (
+                <div key={lbl}>
+                  <p className="text-xl font-extrabold text-[#18181b]">{val}</p>
+                  <p className="font-mono text-[10px] text-[#9b9895] uppercase tracking-widest">{lbl}</p>
+                </div>
+              ))}
+            </div>
 
-          {/* Socials */}
-          <div className="flex items-center gap-6">
-            <a
-              href="https://github.com/Yethu-2"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="text-slate-400 hover:text-accent transition-colors"
-            >
-              <FiGithub size={22} />
-            </a>
-            <a
-              href="mailto:yethu2000517@gmail.com"
-              aria-label="Email"
-              className="text-slate-400 hover:text-accent transition-colors"
-            >
-              <FiMail size={22} />
-            </a>
-            <span className="text-slate-700">|</span>
-            <span className="flex items-center gap-1.5 text-slate-500 text-sm">
-              <HiLocationMarker size={13} className="text-accent" />
-              Ho Chi Minh, Vietnam
-            </span>
-          </div>
-        </motion.div>
-      </div>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <Link to="projects" smooth duration={500} offset={-64}>
+                <motion.button whileHover={{scale:1.03}} whileTap={{scale:0.97}}
+                  className="px-6 py-2.5 bg-[#18181b] text-white font-semibold rounded-lg text-sm hover:bg-zinc-700 transition-colors">
+                  View Projects
+                </motion.button>
+              </Link>
+              <a href="/cv.pdf" download>
+                <motion.button whileHover={{scale:1.03}} whileTap={{scale:0.97}}
+                  className="px-6 py-2.5 border border-accent text-accent font-semibold rounded-lg text-sm hover:bg-accent hover:text-white transition-all flex items-center gap-2">
+                  <FiDownload size={14}/> Resume
+                </motion.button>
+              </a>
+            </div>
 
-      {/* Scroll hint */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-      >
-        <div className="w-6 h-10 border-2 border-slate-700 rounded-full flex justify-center pt-2">
-          <div className="w-1 h-2 bg-accent rounded-full" />
+            <div className="flex items-center gap-5">
+              <a href="https://github.com/Yethu-2" target="_blank" rel="noreferrer"
+                className="text-[#706d6a] hover:text-accent transition-colors" aria-label="GitHub">
+                <FiGithub size={20}/>
+              </a>
+              <a href="mailto:yethu2000517@gmail.com"
+                className="text-[#706d6a] hover:text-accent transition-colors" aria-label="Email">
+                <FiMail size={20}/>
+              </a>
+              <span className="text-[#c5c0b8]">|</span>
+              <span className="font-mono text-xs text-[#706d6a]">Ho Chi Minh, Vietnam</span>
+            </div>
+          </motion.div>
+
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

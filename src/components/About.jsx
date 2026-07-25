@@ -1,73 +1,60 @@
 import { motion } from 'framer-motion'
-import { FiCode, FiCpu, FiServer, FiSmartphone } from 'react-icons/fi'
+import { FiCode, FiServer, FiSmartphone, FiCpu } from 'react-icons/fi'
 
-const HIGHLIGHTS = [
-  { icon: FiCode,        label: 'Frontend',   desc: 'React · Vite · Tailwind' },
-  { icon: FiServer,      label: 'Backend',    desc: 'Node.js · Spring Boot · Express' },
-  { icon: FiSmartphone,  label: 'Mobile',     desc: 'Kotlin · Jetpack Compose' },
-  { icon: FiCpu,         label: 'AI & DevOps', desc: 'LLMs · Ollama · Docker' },
+const CARDS = [
+  { Icon: FiCode,       label: 'Frontend',    desc: 'React · Vite · Tailwind' },
+  { Icon: FiServer,     label: 'Backend',     desc: 'Node.js · Spring Boot' },
+  { Icon: FiSmartphone, label: 'Mobile',      desc: 'Kotlin · Jetpack Compose' },
+  { Icon: FiCpu,        label: 'AI & DevOps', desc: 'LLMs · Ollama · Docker' },
 ]
 
 export default function About() {
   return (
-    <section id="about" className="py-28 px-6">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeading index="01" title="Who I Am" />
+    <section id="about" className="py-24 px-6 border-t border-black/[0.07]">
+      <div className="max-w-5xl mx-auto">
+        <SectionLabel number="01" label="About Me"/>
 
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          {/* Bio */}
+        <div className="grid md:grid-cols-2 gap-12 mb-10">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-5 text-slate-400 text-base leading-relaxed"
+            initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
+            viewport={{ once:true }} transition={{ duration:0.5 }}
+            className="space-y-4 text-[#4a4745] leading-relaxed text-[15px]"
           >
             <p>
               I'm an IT student at{' '}
-              <span className="text-accent font-medium">RMIT University Vietnam</span>{' '}
-              (expected graduation 2027), majoring in Full-Stack Development and AI
-              Systems. I thrive at the intersection of clean backend architecture and
-              intuitive frontend experiences.
+              <span className="text-[#18181b] font-semibold">RMIT University Vietnam</span>{' '}
+              (graduating 2027), specializing in Full-Stack Development and AI Systems.
             </p>
             <p>
-              My work spans REST APIs with{' '}
-              <span className="text-white">Spring Boot</span>, reactive UIs with{' '}
-              <span className="text-white">React</span>, Android apps using{' '}
-              <span className="text-white">Kotlin + Jetpack Compose</span>, and
-              AI-driven tools powered by large language models via{' '}
-              <span className="text-white">Ollama</span>.
+              My work spans REST APIs with <span className="text-[#18181b] font-medium">Spring Boot</span>,
+              reactive UIs with <span className="text-[#18181b] font-medium">React</span>, Android apps in{' '}
+              <span className="text-[#18181b] font-medium">Kotlin + Jetpack Compose</span>, and AI tools
+              built on <span className="text-[#18181b] font-medium">Ollama</span>.
             </p>
             <p>
-              I care deeply about maintainable code, clean architecture, and shipping
-              things that actually work — from local development all the way to
-              containerised cloud deployment.
+              I care about clean architecture, maintainable code, and shipping things
+              that work — from local dev to containerised cloud deployment.
             </p>
-            <p>
-              Off the keyboard I'm exploring home server setups, self-hosting
-              services, and reading about AI research.
-            </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Chip>English — Fluent</Chip>
-              <Chip>Burmese — Native</Chip>
+            <div className="flex flex-wrap gap-2 pt-2">
+              <Tag>English — Fluent</Tag>
+              <Tag>Burmese — Native</Tag>
+              <Tag>Open to opportunities</Tag>
             </div>
           </motion.div>
 
-          {/* Highlight cards */}
-          <div className="grid grid-cols-2 gap-4">
-            {HIGHLIGHTS.map(({ icon: Icon, label, desc }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.03 }}
-                className="p-5 rounded-xl border border-white/5 bg-white/[0.02] hover:border-accent/20 transition-all"
+          <div className="grid grid-cols-2 gap-3">
+            {CARDS.map(({ Icon, label, desc }, i) => (
+              <motion.div key={label}
+                initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay: i*0.08, duration:0.5 }}
+                className="bg-[#faf8f4] rounded-xl p-5 border border-black/[0.07]
+                  hover:border-accent/30 hover:shadow-md hover:shadow-black/5 transition-all group"
               >
-                <Icon className="text-accent mb-3" size={22} />
-                <p className="text-white font-semibold text-sm mb-1">{label}</p>
-                <p className="text-slate-500 text-xs leading-relaxed">{desc}</p>
+                <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
+                  <Icon size={18} className="text-accent"/>
+                </div>
+                <p className="font-semibold text-[#18181b] text-sm mb-0.5">{label}</p>
+                <p className="text-[#706d6a] text-xs">{desc}</p>
               </motion.div>
             ))}
           </div>
@@ -77,26 +64,19 @@ export default function About() {
   )
 }
 
-function Chip({ children }) {
+function Tag({ children }) {
   return (
-    <span className="px-3 py-1 bg-accent/10 text-accent text-xs font-mono rounded-full border border-accent/20">
+    <span className="px-3 py-1 bg-[#faf8f4] border border-black/[0.08] text-[#5a5652] text-xs rounded-full font-mono">
       {children}
     </span>
   )
 }
 
-export function SectionHeading({ index, title }) {
+export function SectionLabel({ number, label }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="mb-14"
-    >
-      <p className="text-accent font-mono text-sm mb-2">{index}. About Me</p>
-      <h2 className="text-4xl md:text-5xl font-bold text-white">{title}</h2>
-      <div className="w-14 h-0.5 bg-gradient-to-r from-accent to-transparent mt-4" />
-    </motion.div>
+    <div className="mb-10">
+      <span className="font-mono text-xs text-accent tracking-widest uppercase font-medium">{number} —</span>
+      <h2 className="text-3xl md:text-4xl font-extrabold text-[#18181b] mt-1">{label}</h2>
+    </div>
   )
 }

@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#64ffda',
+        accent: '#EA580C',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
     },

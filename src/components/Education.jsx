@@ -1,89 +1,58 @@
 import { motion } from 'framer-motion'
-import { HiAcademicCap } from 'react-icons/hi'
+import { HiOutlineAcademicCap } from 'react-icons/hi'
+import { SectionLabel } from './About'
 
 const COURSES = [
-  'Algorithms & Analysis',
-  'Full Stack Development',
-  'Mobile Application Development',
-  'Further Programming',
-  'Cloud Foundations',
-  'Systems Deployment & Operations',
-  'Software Engineering: Process & Tools',
-  'Programming Internet of Things',
-  'Software Engineering Project Management',
+  'Algorithms & Analysis', 'Full Stack Development', 'Mobile App Development',
+  'Further Programming', 'Cloud Foundations', 'Systems Deployment & Operations',
+  'SE: Process & Tools', 'Programming IoT', 'SE Project Management',
 ]
 
 export default function Education() {
   return (
-    <section id="education" className="py-28 px-6 bg-white/[0.012]">
-      <div className="max-w-6xl mx-auto">
+    <section id="education" className="py-24 px-6 border-t border-black/[0.07]">
+      <div className="max-w-5xl mx-auto">
+        <SectionLabel number="04" label="Education"/>
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-14"
+          initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
+          viewport={{ once:true }} transition={{ duration:0.6 }}
+          className="bg-[#faf8f4] rounded-2xl border border-black/[0.07] p-8"
         >
-          <p className="text-accent font-mono text-sm mb-2">04. Education</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white">Background</h2>
-          <div className="w-14 h-0.5 bg-gradient-to-r from-accent to-transparent mt-4" />
-        </motion.div>
-
-        <div className="relative">
-          {/* Timeline bar */}
-          <div className="absolute left-6 top-3 bottom-3 w-px bg-gradient-to-b from-accent via-accent/30 to-transparent hidden md:block" />
-
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="md:pl-16 relative"
-          >
-            {/* Timeline dot */}
-            <div className="absolute left-[18px] top-4 w-5 h-5 rounded-full bg-accent border-4 border-[#050510] hidden md:block shadow-[0_0_10px_#64ffda50]" />
-
-            <div className="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-accent/20 transition-all">
-              <div className="flex flex-wrap items-start justify-between gap-4 mb-7">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-accent/10 border border-accent/20">
-                    <HiAcademicCap size={22} className="text-accent" />
-                  </div>
-                  <div>
-                    <h3 className="text-white font-bold text-xl">
-                      Bachelor of Information Technology
-                    </h3>
-                    <p className="text-accent font-medium text-sm mt-0.5">
-                      RMIT University Vietnam (SGS)
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="inline-block px-3 py-1 bg-accent/10 text-accent text-xs font-mono rounded-full border border-accent/20">
-                    Expected 2027
-                  </span>
-                  <p className="text-slate-500 text-xs mt-1.5">Ho Chi Minh City, Vietnam</p>
-                </div>
+          <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
+            <div className="flex items-start gap-4">
+              <div className="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <HiOutlineAcademicCap size={22} className="text-accent"/>
               </div>
-
               <div>
-                <p className="text-slate-500 text-xs font-mono uppercase tracking-widest mb-4">
-                  Relevant Coursework
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {COURSES.map((c) => (
-                    <span
-                      key={c}
-                      className="px-3 py-1.5 bg-white/5 border border-white/8 text-slate-300 text-xs rounded-lg font-mono"
-                    >
-                      {c}
-                    </span>
-                  ))}
-                </div>
+                <h3 className="font-bold text-[#18181b] text-xl mb-1">
+                  Bachelor of Information Technology
+                </h3>
+                <p className="text-[#4a4745] text-sm font-medium">RMIT University Vietnam (SGS)</p>
+                <p className="text-[#706d6a] text-sm">Ho Chi Minh City, Vietnam</p>
               </div>
             </div>
-          </motion.div>
-        </div>
+            <span className="px-4 py-1.5 bg-accent/10 text-accent font-mono text-xs rounded-full border border-accent/20 font-medium">
+              Expected 2027
+            </span>
+          </div>
+
+          <div className="border-t border-black/[0.07] pt-6">
+            <p className="font-mono text-[11px] text-[#9b9895] tracking-widest uppercase mb-4 font-medium">
+              Relevant Coursework
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {COURSES.map((c, i) => (
+                <motion.span key={c}
+                  initial={{ opacity:0 }} whileInView={{ opacity:1 }}
+                  viewport={{ once:true }} transition={{ delay: i*0.04 }}
+                  className="px-3 py-1.5 bg-white border border-black/[0.07] text-[#5a5652] text-xs rounded-lg
+                    hover:border-accent/30 hover:text-accent transition-all cursor-default font-mono"
+                >{c}</motion.span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
